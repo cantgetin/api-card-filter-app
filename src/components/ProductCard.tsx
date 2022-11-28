@@ -11,7 +11,7 @@ const ProductCard: FC<ProductCardProps> = ({product}) => {
             <div className="mb-5">
                 <img src={product.images[0]} className="h-32 rounded-xl mx-auto"/>
             </div>
-            <div className="h-16">{product.brand} {product.title}</div>
+            <div className="h-16 hover:text-blue-400">{product.brand} {product.title}</div>
             {/*<div className="w-full rounded-xl border">{product.rating}</div>*/}
             <div className="text-right text-lg font-bold">{product.price}$</div>
         </div>
