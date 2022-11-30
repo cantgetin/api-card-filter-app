@@ -20,10 +20,13 @@ function App() {
             <Header/>
             {products ?
                 <List items={products}
-                      renderItem={(product: Product) => <ProductCard product={product} key={product.id}/>}/>
+                      renderItem={(product: Product) =>
+                          <ProductCard product={product} key={product.id}/>
+                      }/>
                 :
                 <div className="flex justify-center items-center h-screen w-screen">
-                    <SpinnerCircularFixed size={90} thickness={127} speed={112} color="var(--primaryBlue)" secondaryColor="#ececee"/>
+                    <SpinnerCircularFixed size={90} thickness={127} speed={112} color="var(--primaryBlue)"
+                                          secondaryColor="#ececee"/>
                 </div>
             }
         </div>
