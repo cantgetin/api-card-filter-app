@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 
-type ProductCardProps = {
+interface ProductCardProps {
     title: string,
     defaultValue: string,
     options: { value: string, name: string }[]

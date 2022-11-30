@@ -1,7 +1,7 @@
 import React from 'react';
 import {ReactComponent as ActiveStar} from '../assets/star.svg'
 
-type RatingProps = {
+interface RatingProps {
     activeStars: number,
     totalStars: number
 }

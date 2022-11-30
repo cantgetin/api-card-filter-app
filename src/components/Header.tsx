@@ -1,7 +1,12 @@
 import React from 'react';
 import CustomSelect from "./CustomSelect";
 
-const Header = () => {
+interface HeaderProps {
+    displayAsList: boolean,
+    setDisplayAsList: Function
+}
+
+const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
     return (
         <div className="bg-white shadow-lg h-1/6 w-screen p-6 justify-center max-w-full">
             <div className="w-1/3 mx-auto flex flex-col gap-5">
@@ -10,10 +15,17 @@ const Header = () => {
                 <div className="flex w-full gap-5 justify-center align-middle">
                     <CustomSelect title="Сортировка"
                                   defaultValue="По умолчанию"
-                                  options={[{value: "name", name: "По названию"}, {value: "name", name: "По цене"}, {value: "rating", name: "По рейтингу"}]}/>
+                                  options={[
+                                      {value: "name", name: "По названию"},
+                                      {value: "name", name: "По цене"},
+                                      {value: "rating", name: "По рейтингу"}]}/>
                     <CustomSelect title="Группировка"
                                   defaultValue="Отсутствует"
-                                  options={[{value: "name", name: "По категории"}, {value: "name", name: "По производителю"}]}/>
+                                  options={[
+                                      {value: "name", name: "По категории"},
+                                      {value: "name", name: "По производителю"}]}/>
+
+                    <button onClick={() => props.setDisplayAsList(!props.displayAsList)} className="bg-slate-100 px-2 rounded-lg shadow-inner shadow-md">Вид</button>
                 </div>
             </div>
         </div>
