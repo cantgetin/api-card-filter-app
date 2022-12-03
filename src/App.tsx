@@ -3,16 +3,17 @@ import Header from "./components/Header";
 import List from "./components/List";
 import ProductCard from "./components/ProductCard";
 import {Product} from "./types/types";
-import axios from "axios";
 import {SpinnerCircularFixed} from 'spinners-react';
+import {useAppDispatch, useAppSelector} from "./store/hooks";
+import {fetchProducts, selectProducts} from "./store/productsSlice";
 
 function App() {
 
-    const [products, setProducts] = useState<Product[] | null>(null);
+    const products = useAppSelector(selectProducts);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        axios.get<{ products: Product[] }>('https://dummyjson.com/products')
-            .then(r => setProducts(r.data.products));
+        dispatch(fetchProducts())
     }, [])
 
     const [displayAsList, setDisplayAsList] = useState<boolean>(false);
@@ -20,7 +21,7 @@ function App() {
     return (
         <div className="App bg-slate-100 w-screen max-w-full">
             <Header displayAsList={displayAsList} setDisplayAsList={setDisplayAsList}/>
-            {products ?
+            {products.length ?
                 displayAsList ? <List
                         className="flex flex-wrap gap-2 w-2/3 mx-auto justify-center align-middle py-8 max-w-full"
                         items={products}
