@@ -40,6 +40,42 @@ const productsSlice = createSlice({
                     product.brand.toLowerCase().includes(action.payload.toLowerCase()))
             };
         },
+        removeSortAndGroup: (state) => {
+            return {
+                ...state,
+                filteredProducts: [...state.filteredProducts].sort((a, b) => a.price - b.price)
+            }
+        },
+        sortByPriceAscending: (state) => {
+            return {
+                ...state,
+                filteredProducts: [...state.filteredProducts].sort((a, b) => a.price - b.price)
+            };
+        },
+        sortByName: (state) => {
+            return {
+                ...state,
+                filteredProducts: [...state.filteredProducts].sort((a, b) => a.brand.localeCompare(b.brand))
+            };
+        },
+        sortByHighestRating: (state) => {
+            return {
+                ...state,
+                filteredProducts: [...state.filteredProducts].sort((a, b) => b.rating - a.rating)
+            };
+        },
+        groupByCategory: (state) => {
+            return {
+                ...state,
+                filteredProducts: [...state.filteredProducts].sort((a, b) => a.category.localeCompare(b.category))
+            };
+        },
+        groupByBrand: (state) => {
+            return {
+                ...state,
+                filteredProducts: [...state.filteredProducts].sort((a, b) => a.brand.localeCompare(b.brand))
+            };
+        },
     },
     extraReducers: (builder) => {
         // Add reducers for additional action types here, and handle loading state as needed
@@ -50,7 +86,16 @@ const productsSlice = createSlice({
     },
 })
 
-export const {searchByName} = productsSlice.actions
+
+export const {
+    searchByName,
+    removeSortAndGroup,
+    sortByPriceAscending,
+    sortByName,
+    sortByHighestRating,
+    groupByCategory,
+    groupByBrand
+} = productsSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectProducts = (state: RootState) => state.products.filteredProducts
