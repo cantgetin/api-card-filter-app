@@ -14,7 +14,7 @@ function App() {
 
     useEffect(() => {
         dispatch(fetchProducts())
-    }, [])
+    }, [dispatch])
 
     const [displayAsList, setDisplayAsList] = useState<boolean>(false);
 

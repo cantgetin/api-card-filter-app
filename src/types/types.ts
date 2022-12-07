@@ -11,14 +11,8 @@ export interface Product {
     images: string[]
 }
 
-export enum SortTypes {
-    ByName,
-    ByPriceAsc,
-    ByPriceDesc,
-    ByHighestRating
-}
-
-export enum GroupTypes {
-    ByCategory,
-    ByBrand
+export interface CustomSelectOption {
+    name: string,
+    callback: Function
+    selected?: boolean
 }

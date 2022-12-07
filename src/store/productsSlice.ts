@@ -3,15 +3,6 @@ import axios from "axios";
 import {Product} from "../types/types";
 import {RootState} from "./store";
 
-// First, create the thunk
-export const fetchProducts = createAsyncThunk(
-    'products/fetchProducts',
-    async () => {
-        const response = await axios.get<{ products: Product[] }>('https://dummyjson.com/products')
-        return response.data.products;
-    }
-)
-
 interface ProductsState {
     products: Product[]
     filteredProducts: Product[]
@@ -24,15 +15,20 @@ const initialState = {
     loading: 'idle',
 } as ProductsState
 
-// Then, handle actions in your reducers:
+export const fetchProducts = createAsyncThunk(
+    'products/fetchProducts',
+    async () => {
+        const response = await axios.get<{ products: Product[] }>('https://dummyjson.com/products')
+
+        return response.data.products;
+    }
+)
+
 const productsSlice = createSlice({
     name: 'Products',
     initialState,
     reducers: {
-        // standard reducer logic, with auto-generated action types per reducer
-        // Use the PayloadAction type to declare the contents of `action.payload`
         searchByName: (state, action: PayloadAction<string>) => {
-            // The object you return is the full state object update in your reducer
             return {
                 ...state,
                 filteredProducts: [...state.products].filter((product) =>
@@ -40,22 +36,22 @@ const productsSlice = createSlice({
                     product.brand.toLowerCase().includes(action.payload.toLowerCase()))
             };
         },
-        removeSortAndGroup: (state) => {
+        defaultSort: (state) => {
             return {
                 ...state,
-                filteredProducts: [...state.filteredProducts].sort((a, b) => a.price - b.price)
+                filteredProducts: [...state.filteredProducts].sort((a, b) => a.brand.localeCompare(b.brand))
+            }
+        },
+        defaultGroup: (state) => {
+            return {
+                ...state,
+                filteredProducts: [...state.filteredProducts].sort((a, b) => a.brand.localeCompare(b.brand))
             }
         },
         sortByPriceAscending: (state) => {
             return {
                 ...state,
                 filteredProducts: [...state.filteredProducts].sort((a, b) => a.price - b.price)
-            };
-        },
-        sortByName: (state) => {
-            return {
-                ...state,
-                filteredProducts: [...state.filteredProducts].sort((a, b) => a.brand.localeCompare(b.brand))
             };
         },
         sortByHighestRating: (state) => {
@@ -78,26 +74,23 @@ const productsSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        // Add reducers for additional action types here, and handle loading state as needed
         builder.addCase(fetchProducts.fulfilled, (state, action) => {
-            // Add Product to the state array
-            state.products = state.filteredProducts = action.payload;
+            state.products = state.filteredProducts = action.payload.sort((a, b) => a.brand.localeCompare(b.brand));
         })
     },
 })
 
 
 export const {
+    defaultSort,
+    defaultGroup,
     searchByName,
-    removeSortAndGroup,
     sortByPriceAscending,
-    sortByName,
     sortByHighestRating,
     groupByCategory,
     groupByBrand
 } = productsSlice.actions
 
-// Other code such as selectors can use the imported `RootState` type
 export const selectProducts = (state: RootState) => state.products.filteredProducts
 
 export default productsSlice.reducer
