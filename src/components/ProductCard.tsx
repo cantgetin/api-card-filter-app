@@ -7,14 +7,14 @@ interface ProductCardProps {
     className: string
 }
 
-const ProductCard: FC<ProductCardProps> = (props: ProductCardProps) => {
+const ProductCard: FC<ProductCardProps> = ({product, className}) => {
     return (
-        <div className={props.className}>
+        <div className={className}>
             <div className="mb-5 w-full">
-                <img src={props.product.images[0]} className="h-32 rounded-xl mx-auto"/>
+                <img src={product.images[0]} className="h-32 rounded-xl mx-auto" alt="product image"/>
             </div>
             <div>
-                <div className="hover:text-blue-400  w-full">{props.product.brand} {props.product.title}</div>
+                <div className="hover:text-blue-400  w-full">{product.brand} {product.title}</div>
                 <div className="text-gray-400 overflow-hidden h-32 py-5">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                     et
@@ -26,8 +26,10 @@ const ProductCard: FC<ProductCardProps> = (props: ProductCardProps) => {
                     deserunt mollit anim id est laborum.
                 </div>
             </div>
-            {/*<Rating activeStars={product.rating} totalStars={5} />*/}
-            <div className="text-right text-lg font-bold ml-auto">{props.product.price}$</div>
+            <div className="flex justify-between items-center pt-2 gap-5">
+                <Rating className="flex relative z-10 h-10 w-min h-min" activeStars={product.rating} totalStars={5} />
+                <div className="text-right text-lg font-bold ml-auto">{product.price}$</div>
+            </div>
         </div>
     );
 };

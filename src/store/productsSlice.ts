@@ -1,25 +1,24 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit'
 import axios from "axios";
-import {Product} from "../types/types";
+import {LoadingState, Product} from "../types/types";
 import {RootState} from "./store";
 
 interface ProductsState {
     products: Product[]
     filteredProducts: Product[]
-    loading: 'idle' | 'pending' | 'succeeded' | 'failed'
+    loading: LoadingState
 }
 
 const initialState = {
     products: [],
     filteredProducts: [],
-    loading: 'idle',
+    loading: LoadingState.Idle,
 } as ProductsState
 
 export const fetchProducts = createAsyncThunk(
     'products/fetchProducts',
     async () => {
         const response = await axios.get<{ products: Product[] }>('https://dummyjson.com/products')
-
         return response.data.products;
     }
 )
@@ -76,10 +75,16 @@ const productsSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchProducts.fulfilled, (state, action) => {
             state.products = state.filteredProducts = action.payload.sort((a, b) => a.brand.localeCompare(b.brand));
+            state.loading = LoadingState.Succeeded
+        })
+        builder.addCase(fetchProducts.rejected, (state, action) => {
+            state.loading = LoadingState.Failed
+        })
+        builder.addCase(fetchProducts.pending, (state, action) => {
+            state.loading = LoadingState.Pending
         })
     },
 })
-
 
 export const {
     defaultSort,
@@ -92,5 +97,6 @@ export const {
 } = productsSlice.actions
 
 export const selectProducts = (state: RootState) => state.products.filteredProducts
+export const selectProductsLoading = (state: RootState) => state.products.loading
 
 export default productsSlice.reducer

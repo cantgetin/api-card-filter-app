@@ -16,3 +16,10 @@ export interface CustomSelectOption {
     callback: Function
     selected?: boolean
 }
+
+export enum LoadingState {
+    Idle,
+    Pending,
+    Succeeded,
+    Failed
+}

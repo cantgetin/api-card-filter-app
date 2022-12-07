@@ -10,11 +10,11 @@ import {
 } from "../store/productsSlice";
 
 interface HeaderProps {
-    displayAsList: boolean,
-    setDisplayAsList: Function
+    displayCardsAsBlocks: boolean,
+    setDisplayCardsAsBlocks: Function
 }
 
-const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
+const Header: React.FC<HeaderProps> = ({displayCardsAsBlocks, setDisplayCardsAsBlocks}) => {
 
     const dispatch = useAppDispatch();
 
@@ -22,7 +22,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
         dispatch(searchByName(e.target.value))
     }
 
-    const switchListDisplay = () => props.setDisplayAsList(!props.displayAsList)
+    const switchListDisplay = () => setDisplayCardsAsBlocks(!displayCardsAsBlocks)
 
     return (
         <div className="bg-white shadow-lg h-1/6 w-screen p-6 justify-center max-w-full relative z-20">
@@ -34,7 +34,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
                                   options={[
                                       {callback: () => dispatch(defaultSort()), name: "По названию", selected: true},
                                       {callback: () => dispatch(sortByPriceAscending()), name: "По возрастанию цены"},
-                                      {callback: () => dispatch(sortByHighestRating()), name: "По рейтингу"}]}/>
+                                      {callback: () => dispatch(sortByHighestRating()), name: "Сначала с лучшей оценкой"}]}/>
                     <CustomSelect title="Группировка"
                                   options={[
                                       {callback: () => dispatch(defaultGroup()), name: "Без группировки", selected: true},

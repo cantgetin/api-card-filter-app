@@ -1,12 +1,12 @@
 import React, {FC} from 'react';
 import {CustomSelectOption} from "../types/types";
 
-interface ProductCardProps {
+interface CustomSelectProps {
     title: string,
     options: CustomSelectOption[]
 }
 
-const CustomSelect: FC<ProductCardProps> = ({title, options}) => {
+const CustomSelect: FC<CustomSelectProps> = ({title, options}) => {
 
     const handleOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         options[Number(e.target.value)].callback()
