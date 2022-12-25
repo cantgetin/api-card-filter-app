@@ -26,11 +26,11 @@ function App() {
                 products.length > 0 ?
                     displayCardsInGrid ?
                         <List
-                            className="flex flex-wrap gap-2 w-2/3 mx-auto justify-center align-middle py-8 max-w-full"
+                            className="flex flex-wrap gap-2 xl:w-2/3 mx-auto justify-center align-middle py-8 max-w-full"
                             items={products}
                             renderItem={(product: Product) =>
                                 <ProductCard
-                                    className="flex flex-col justify-between shadow-sm rounded-xl w-64 p-6 relative bg-white text-lg"
+                                    className="flex flex-col justify-between shadow-sm rounded-xl w-44 sm:w-64 p-2 sm:p-6 relative bg-white text-lg"
                                     product={product}
                                     key={product.id}
                                 />
@@ -38,11 +38,11 @@ function App() {
                         />
                         :
                         <List
-                            className="flex flex-wrap gap-2 w-2/3 mx-auto justify-center align-middle py-8 max-w-full"
+                            className="flex flex-wrap gap-2 xl:w-2/3 mx-auto justify-center align-middle py-8 max-w-full"
                             items={products}
                             renderItem={(product: Product) =>
                                 <ProductCard
-                                    className="shadow-sm flex gap-5 rounded-xl w-full p-6 relative bg-white text-lg"
+                                    className="shadow-sm flex gap-5 rounded-xl w-full p-6 relative bg-white text-lg flex-wrap md:flex-nowrap"
                                     product={product}
                                     key={product.id}
                                 />

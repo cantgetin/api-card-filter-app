@@ -26,7 +26,7 @@ const ProductCard: FC<ProductCardProps> = ({product, className}) => {
                     deserunt mollit anim id est laborum.
                 </div>
             </div>
-            <div className="flex justify-between items-center pt-2 gap-5">
+            <div className="flex justify-between items-center pt-2 gap-2 sm:gap-5">
                 <Rating className="flex relative z-10 w-min h-min" activeStars={product.rating} totalStars={5} />
                 <div className="text-right text-lg font-bold ml-auto">{product.price}$</div>
             </div>

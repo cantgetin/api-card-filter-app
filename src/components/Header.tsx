@@ -28,10 +28,10 @@ const Header: React.FC<HeaderProps> = ({displayCardsInGrid, setDisplayCardsInGri
 
     return (
         <div className="bg-white shadow-lg h-1/6 w-screen p-6 justify-center max-w-full relative z-20">
-            <div className="w-1/3 mx-auto flex flex-col gap-5">
-                <input className="w-full bg-slate-100 rounded-lg px-2 py-1 shadow-md text-lg"
+            <div className="mx-auto flex flex-col gap-5 w-2/3 md:w-1/3">
+                <input className="w-full bg-slate-100 rounded-lg px-2 py-1 shadow-md text-lg "
                        type="text" placeholder="Поиск товара" onChange={(e) => inputTextChanged(e)}/>
-                <div className="flex w-full gap-5 justify-center align-middle select-none">
+                <div className="flex w-full gap-5 justify-center align-middle select-none flex-col md:flex-row">
                     <CustomSelect title="Сортировка"
                                   options={[
                                       {callback: () => dispatch(defaultSort()), name: "По названию", selected: true},
