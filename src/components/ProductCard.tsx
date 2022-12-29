@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import {Product} from "../types/types";
 import Rating from "./Rating";
+import {Link} from "react-router-dom";
 
 interface ProductCardProps {
     product: Product
@@ -14,7 +15,11 @@ const ProductCard: FC<ProductCardProps> = ({product, className}) => {
                 <img src={product.images[0]} className="h-32 rounded-xl mx-auto" alt="product image"/>
             </div>
             <div>
-                <div className="hover:text-blue-400  w-full hover:cursor-pointer">{product.brand} {product.title}</div>
+                <Link to={`/product/${product.id}`}>
+                    <div className="hover:text-blue-400  w-full hover:cursor-pointer">
+                        {product.brand} {product.title}
+                    </div>
+                </Link>
                 <div className="text-gray-400 overflow-hidden h-32 py-5">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                     et

@@ -8,7 +8,8 @@ export interface Product {
     stock: number,
     brand: string,
     category: string,
-    images: string[]
+    thumbnail: string
+    images: string[],
 }
 
 export interface CustomSelectOption {
