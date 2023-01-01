@@ -1,47 +1,46 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
-import {Product} from "../types/types";
+import {LoadingState, Product} from "../types/types";
 import {Link, useParams} from "react-router-dom";
 import Rating from "../components/Rating";
-import ProductCard from "../components/ProductCard";
 import List from "../components/List";
+import {SpinnerCircularFixed} from "spinners-react";
+import {useAppDispatch, useAppSelector} from "../store/hooks";
+import {fetchProducts, selectProducts, selectProductsLoading} from "../store/productsSlice";
+import {
+    fetchProduct, fetchSimilarProducts,
+    selectProduct,
+    selectProductLoading,
+    selectSimilarProducts
+} from "../store/productSlice";
 
 const ProductPage = () => {
 
     const {id} = useParams<{ id: string }>();
 
-    const [product, setProduct] = useState<Product>()
-    const [similarProducts, setSimilarProducts] = useState<Product[]>()
 
-    async function fetchProduct(id: number) {
-        const response = await axios.get<Product>(`https://dummyjson.com/products/${id}`)
-        return response.data
-    }
+    const dispatch = useAppDispatch();
 
-    async function getSimilarProducts(category: string) {
-        const response = await axios.get<{products: Product[]}>(`https://dummyjson.com/products/category/${category}`)
-        return response.data
-    }
+    const product = useAppSelector<Product>(selectProduct);
+    const similarProducts = useAppSelector<Product[]>(selectSimilarProducts);
+    const loaded = useAppSelector<LoadingState>(selectProductLoading)
+
+    useEffect(() => {
+        dispatch(fetchProduct(id!))
+    }, [dispatch, id])
+
+    useEffect(() => {
+        if (Object.keys(product).length !== 0) dispatch(fetchSimilarProducts(product.category))
+    }, [product])
 
     const [selectedImage, setSelectedImage] = useState<string>()
 
     useEffect(() => {
-        fetchProduct(Number(id)).then(r => setProduct(r))
-    }, [id])
-
-    useEffect(() => {
-        if (product != null) {
-            setSelectedImage(product.images[0])
-            getSimilarProducts(product.category).then(r => setSimilarProducts(r.products))
-        }
-    }, [product])
-
-    useEffect(() => {
-        console.log(similarProducts)
-    }, [similarProducts])
+        if (loaded === LoadingState.Succeeded) setSelectedImage(product.images[0])
+    }, [loaded])
 
     return (
-        product != null ?
+        loaded === LoadingState.Succeeded ?
             <div className="App w-screen max-w-full bg-slate-50 flex flex-col justify-center items-center">
                 <div className="w-full 2xl:w-2/3 m-auto flex flex-col gap-3 pt-3 text-slate-800">
                     <div className="px-5 py-1">
@@ -88,12 +87,14 @@ const ProductPage = () => {
                             </div>
                             <div className="mt-auto">Популярные товары из этой категории:</div>
                             <div className="flex gap-5">
-                                {similarProducts!=null ?
+                                {similarProducts.length > 0 ?
                                 <List
                                     className="flex gap-5"
-                                    items={similarProducts.slice(0, 3)}
+                                    items={similarProducts}
                                     renderItem={(product: Product) =>
-                                        <Link className="p-2 w-full border-2 rounded-md hover:text-blue-400"  to={`/product/${product.id}`}>{product.brand +' '+ product.title}</Link>
+                                        <Link className="p-2 w-full border-2 rounded-md hover:text-blue-400" to={`/product/${product.id}`}>
+                                            {product.brand +' '+ product.title}
+                                        </Link>
                                     }
                                 /> : null}
                             </div>
@@ -128,7 +129,11 @@ const ProductPage = () => {
                     </div>
                 </div>
             </div>
-            : null
+            :
+            <div className="absolute top-0 flex justify-center items-center h-screen w-screen z-0">
+                <SpinnerCircularFixed size={90} thickness={127} speed={112} color="var(--primaryBlue)"
+                                      secondaryColor="#ececee" />
+            </div>
     );
 }
 
