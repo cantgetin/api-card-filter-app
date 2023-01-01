@@ -12,7 +12,7 @@ const Rating: React.FC<RatingProps> = ({className, activeStars, totalStars}) => 
         <div className={className}>
             {[...new Array(totalStars)].map((arr, index) => {
                 return (
-                    <div className="relative w-5 h-5">
+                    <div className="relative w-5 h-5" key={index}>
                         {activeStars <= (index + 1) ?
                             <ActiveStar className="absolute block m-auto" fill="#dedede" height="48" width="48"/>
                             : null}

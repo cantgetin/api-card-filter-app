@@ -44,7 +44,7 @@ const productsSlice = createSlice({
         defaultGroup: (state) => {
             return {
                 ...state,
-                filteredProducts: [...state.filteredProducts].sort((a, b) => a.brand.localeCompare(b.brand))
+                filteredProducts: [...state.filteredProducts].sort((a, b) => a.id - b.id)
             }
         },
         sortByPriceAscending: (state) => {

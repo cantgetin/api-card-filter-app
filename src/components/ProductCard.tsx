@@ -20,6 +20,7 @@ const ProductCard: FC<ProductCardProps> = ({product, className}) => {
                         {product.brand} {product.title}
                     </div>
                 </Link>
+                <div className="text-blue-400 text-sm absolute">{product.category}</div>
                 <div className="text-gray-400 overflow-hidden h-32 py-5">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                     et

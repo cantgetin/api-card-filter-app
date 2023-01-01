@@ -41,6 +41,7 @@ const productSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchProduct.fulfilled, (state, action) => {
             state.product = action.payload
+            state.loading = LoadingState.Pending
         })
         builder.addCase(fetchProduct.rejected, (state, action) => {
             state.loading = LoadingState.Failed
@@ -49,7 +50,7 @@ const productSlice = createSlice({
             state.loading = LoadingState.Pending
         })
         builder.addCase(fetchSimilarProducts.fulfilled, (state, action) => {
-            state.similarProducts = action.payload.products.slice(0,3)
+            state.similarProducts = action.payload.products.filter(p => p.id !== state.product.id).slice(0,3)
             state.loading = LoadingState.Succeeded
         })
         builder.addCase(fetchSimilarProducts.rejected, (state, action) => {

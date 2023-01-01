@@ -604,10 +604,6 @@ video {
   margin-left: auto;
 }
 
-.-ml-5 {
-  margin-left: -1.25rem;
-}
-
 .mt-auto {
   margin-top: auto;
 }
@@ -641,10 +637,6 @@ video {
   height: 100vh;
 }
 
-.h-96 {
-  height: 24rem;
-}
-
 .h-12 {
   height: 3rem;
 }
@@ -653,12 +645,8 @@ video {
   height: 100%;
 }
 
-.max-h-96 {
-  max-height: 24rem;
-}
-
-.max-h-16 {
-  max-height: 4rem;
+.h-96 {
+  height: 24rem;
 }
 
 .min-h-screen {
@@ -706,15 +694,6 @@ video {
   max-width: 100%;
 }
 
-.max-w-none {
-  max-width: none;
-}
-
-.max-w-max {
-  max-width: -webkit-max-content;
-  max-width: max-content;
-}
-
 .max-w-fit {
   max-width: -webkit-fit-content;
   max-width: -moz-fit-content;
@@ -728,10 +707,6 @@ video {
 .select-none {
   -webkit-user-select: none;
           user-select: none;
-}
-
-.flex-row {
-  flex-direction: row;
 }
 
 .flex-col {
@@ -843,14 +818,14 @@ video {
   padding-bottom: 2rem;
 }
 
-.px-10 {
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
-}
-
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
+}
+
+.px-10 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
 }
 
 .pt-2 {
@@ -901,6 +876,11 @@ video {
   font-weight: 700;
 }
 
+.text-blue-400 {
+  --tw-text-opacity: 1;
+  color: rgb(96 165 250 / var(--tw-text-opacity));
+}
+
 .text-gray-400 {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
@@ -914,6 +894,16 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-blue-600 {
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
+}
+
+.text-blue-800 {
+  --tw-text-opacity: 1;
+  color: rgb(30 64 175 / var(--tw-text-opacity));
 }
 
 .shadow-inner {
@@ -977,28 +967,12 @@ video {
     width: 33.333333%;
   }
 
-  .md\:w-2\/3 {
-    width: 66.666667%;
-  }
-
   .md\:w-1\/2 {
     width: 50%;
   }
 
   .md\:w-16 {
     width: 4rem;
-  }
-
-  .md\:w-full {
-    width: 100%;
-  }
-
-  .md\:min-w-full {
-    min-width: 100%;
-  }
-
-  .md\:max-w-md {
-    max-width: 28rem;
   }
 
   .md\:flex-row {
@@ -1011,16 +985,6 @@ video {
 
   .md\:flex-nowrap {
     flex-wrap: nowrap;
-  }
-}
-
-@media (min-width: 1024px) {
-  .lg\:w-2\/3 {
-    width: 66.666667%;
-  }
-
-  .lg\:flex-row {
-    flex-direction: row;
   }
 }
 

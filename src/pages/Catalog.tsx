@@ -14,7 +14,7 @@ const Catalog = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(fetchProducts())
+        if (products.length === 0) dispatch(fetchProducts())
     }, [dispatch])
 
     const [displayCardsInGrid, setDisplayCardsInGrid] = useState<boolean>(true);

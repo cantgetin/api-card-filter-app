@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import axios from "axios";
 import {LoadingState, Product} from "../types/types";
 import {Link, useParams} from "react-router-dom";
 import Rating from "../components/Rating";
 import List from "../components/List";
 import {SpinnerCircularFixed} from "spinners-react";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
-import {fetchProducts, selectProducts, selectProductsLoading} from "../store/productsSlice";
 import {
     fetchProduct, fetchSimilarProducts,
     selectProduct,
@@ -31,13 +29,13 @@ const ProductPage = () => {
 
     useEffect(() => {
         if (Object.keys(product).length !== 0) dispatch(fetchSimilarProducts(product.category))
-    }, [product])
+    }, [dispatch, product])
 
     const [selectedImage, setSelectedImage] = useState<string>()
 
     useEffect(() => {
         if (loaded === LoadingState.Succeeded) setSelectedImage(product.images[0])
-    }, [loaded])
+    }, [loaded, product.images])
 
     return (
         loaded === LoadingState.Succeeded ?
@@ -60,13 +58,15 @@ const ProductPage = () => {
                             <div className="w-full md:w-16 flex md:flex-col gap-2">
                                 {product.images.map((imageSrc: any) =>
                                     selectedImage === imageSrc ?
-                                        <div className='h-12 w-16 bg-slate-200 flex justify-between cursor-pointer'>
+                                        <div className='h-12 w-16 bg-slate-200 flex justify-between cursor-pointer'
+                                             key={product.images.indexOf(imageSrc)}>
                                             <div className='bg-blue-400 w-1 h-full md:-ml-5'></div>
                                             <img src={imageSrc} className="h-full w-full"
                                                  onMouseOver={() => setSelectedImage(imageSrc)}/>
                                         </div>
                                         :
-                                        <div className='h-12 w-16 bg-slate-200 flex cursor-pointer'>
+                                        <div className='h-12 w-16 bg-slate-200 flex cursor-pointer'
+                                             key={product.images.indexOf(imageSrc)}>
                                             <img src={imageSrc} className="h-full w-full"
                                                  onMouseOver={() => setSelectedImage(imageSrc)}/>
                                         </div>
@@ -88,15 +88,17 @@ const ProductPage = () => {
                             <div className="mt-auto">Популярные товары из этой категории:</div>
                             <div className="flex gap-5">
                                 {similarProducts.length > 0 ?
-                                <List
-                                    className="flex gap-5"
-                                    items={similarProducts}
-                                    renderItem={(product: Product) =>
-                                        <Link className="p-2 w-full border-2 rounded-md hover:text-blue-400" to={`/product/${product.id}`}>
-                                            {product.brand +' '+ product.title}
-                                        </Link>
-                                    }
-                                /> : null}
+                                    <List
+                                        className="flex gap-5"
+                                        items={similarProducts}
+                                        renderItem={(product: Product) =>
+                                            <Link className="p-2 w-full border-2 rounded-md hover:text-blue-400"
+                                                  key={product.id}
+                                                  to={`/product/${product.id}`}>
+                                                {product.brand + ' ' + product.title}
+                                            </Link>
+                                        }
+                                    /> : null}
                             </div>
                         </div>
                     </div>
@@ -132,7 +134,7 @@ const ProductPage = () => {
             :
             <div className="absolute top-0 flex justify-center items-center h-screen w-screen z-0">
                 <SpinnerCircularFixed size={90} thickness={127} speed={112} color="var(--primaryBlue)"
-                                      secondaryColor="#ececee" />
+                                      secondaryColor="#ececee"/>
             </div>
     );
 }
